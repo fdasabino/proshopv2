@@ -1,0 +1,14 @@
+{
+  "name": "proshopv2",
+  "version": "1.0.0",
+  "description": "MERN E-commerce",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "author": "Francisco Sabino",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
