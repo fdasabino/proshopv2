@@ -1,15 +1,15 @@
 import React from "react";
-import { FaUser, FaShoppingCart, FaHome } from "react-icons/fa";
-import { Navbar, Container, Offcanvas, Nav, NavDropdown } from "react-bootstrap";
+import { FaUser, FaShoppingCart, FaHome, FaProjectDiagram } from "react-icons/fa";
+import { Navbar, Container, Offcanvas, Nav, NavDropdown, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <header>
-      <Navbar bg="light" expand="lg" className="mb-3 p-4">
+      <Navbar expand="lg" className="mb-3 p-4">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
-            PROSHOP
+            <FaProjectDiagram /> PROSHOP
           </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} />
           <Navbar.Offcanvas
@@ -18,32 +18,39 @@ const Header = () => {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>Offcanvas</Offcanvas.Title>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>MENU</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link as={Link} to="/">
+              <Nav className="justify-content-end align-items-center flex-grow-1 pe-3">
+                <Nav.Link as={Link} to="/" className="text-uppercase">
                   <FaHome />
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to="/cart">
-                  <FaShoppingCart /> Cart
-                </Nav.Link>
-                <Nav.Link as={Link} to="/">
+                <Nav.Link as={Link} to="/" className="text-uppercase">
                   <FaUser /> Sign in
                 </Nav.Link>
-                <NavDropdown title="Dropdown" id={`offcanvasNavbarDropdown-expand`}>
-                  <NavDropdown.Item as={Link} to="/">
+                <NavDropdown
+                  title="Dropdown"
+                  id={`offcanvasNavbarDropdown-expand`}
+                  className="text-uppercase"
+                >
+                  <NavDropdown.Item as={Link} to="/" className="text-uppercase">
                     Action
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/">
+                  <NavDropdown.Item as={Link} to="/" className="text-uppercase">
                     Another action
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/">
+                  <NavDropdown.Item as={Link} to="/" className="text-uppercase">
                     Something else here
                   </NavDropdown.Item>
                 </NavDropdown>
+                <Nav.Link as={Link} to="/cart" className="text-uppercase">
+                  <FaShoppingCart />{" "}
+                  <Badge bg="info" className="p-2 rounded-circle">
+                    1
+                  </Badge>
+                </Nav.Link>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

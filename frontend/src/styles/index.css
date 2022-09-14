@@ -13,7 +13,6 @@ main {
   border: none !important;
   font-size: 1.5rem !important;
   transition: all 0.3s ease-in-out !important;
-  color: #000;
 }
 
 .navbar-toggler:hover {
@@ -27,7 +26,6 @@ main {
 .nav-link {
   transition: all 0.3s ease-in-out !important;
   font-weight: 600;
-  color: #000 !important;
   margin-right: 1rem !important;
 }
 .nav-link:hover {
