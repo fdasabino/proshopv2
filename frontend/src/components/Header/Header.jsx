@@ -1,9 +1,12 @@
 import React from "react";
 import { FaUser, FaShoppingCart, FaHome, FaProjectDiagram } from "react-icons/fa";
 import { Navbar, Container, Offcanvas, Nav, NavDropdown, Badge } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
   return (
     <header>
       <Navbar expand="lg" className="mb-3 p-4">
@@ -48,7 +51,7 @@ const Header = () => {
                 <Nav.Link as={Link} to="/cart" className="text-uppercase">
                   <FaShoppingCart />{" "}
                   <Badge bg="info" className="p-2 rounded-circle">
-                    1
+                    {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
                   </Badge>
                 </Nav.Link>
               </Nav>
