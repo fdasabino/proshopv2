@@ -40,39 +40,37 @@ const CartScreen = () => {
             </Link>
           </Alert>
         ) : (
-          <ListGroup variant="flush" className="position-relative">
-            <Card>
-              {cartItems.map((item) => (
-                <ListGroup.Item key={item.product} className="p-3">
-                  <FaTimes
-                    onClick={() => removeFromCartHandler(item.product)}
-                    className="removebtn"
-                  />
-                  <Row className="text-center gap-1 align-items-center justify-content-center ">
-                    <Col md={2}>
-                      <Image src={item.image} alt={item.name} fluid={true} />
-                    </Col>
-                    <Col md={4}>
-                      <Link to={`/products/${item.product}`}>{item.name}</Link>
-                    </Col>
-                    <Col md={3}>${item.price}</Col>
-                    <Col lg={2} className="d-flex flex-column align-items-center">
-                      <Form.Control
-                        as="select"
-                        value={item.qty}
-                        onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
-                      >
-                        {[...Array(item.countInStock).keys()].map((x) => (
-                          <option key={x + 1} value={x + 1}>
-                            {x + 1}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-              ))}
-            </Card>
+          <ListGroup variant="flush">
+            {cartItems.map((item) => (
+              <ListGroup.Item key={item.product} className="p-3 border mb-2">
+                <Row className="text-center gap-1 align-items-center justify-content-center ">
+                  <Col md={2}>
+                    <Image src={item.image} alt={item.name} fluid={true} />
+                  </Col>
+                  <Col md={4}>
+                    <Link to={`/products/${item.product}`}>{item.name}</Link>
+                  </Col>
+                  <Col md={3}>${item.price}</Col>
+                  <Col md={2} className="d-flex align-items-center justify-content-center gap-3">
+                    <Form.Control
+                      as="select"
+                      value={item.qty}
+                      onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
+                    >
+                      {[...Array(item.countInStock).keys()].map((x) => (
+                        <option key={x + 1} value={x + 1}>
+                          {x + 1}
+                        </option>
+                      ))}
+                    </Form.Control>
+                    <FaTimes
+                      onClick={() => removeFromCartHandler(item.product)}
+                      className="removebtn"
+                    />
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+            ))}
           </ListGroup>
         )}
       </Col>
@@ -81,13 +79,15 @@ const CartScreen = () => {
           <ListGroup variant="flush" className="my-3 text-center">
             <Card>
               <ListGroup.Item>
-                <h4>
-                  Subtotal{" "}
+                <h4>Order Summary</h4>
+                <hr />
+                <h5>
                   <Badge bg="info" className="px-2 rounded-circle">
                     {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
                   </Badge>{" "}
-                  items
-                </h4>
+                  {cartItems.length === 1 && "Item"}
+                  {cartItems.length > 1 && "Items"}
+                </h5>
                 $
                 {cartItems
                   .reduce((acc, item) => acc + Number(item.qty) * Number(item.price), 0)
