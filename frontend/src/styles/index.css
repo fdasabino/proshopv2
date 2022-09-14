@@ -8,6 +8,13 @@ main {
   min-height: 100vh;
 }
 
+.removebtn {
+  color: red;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 /* bootstrap overrides*/
 .navbar-toggler {
   border: none !important;
@@ -30,4 +37,11 @@ main {
 }
 .nav-link:hover {
   transform: scale(1.05);
+}
+
+.form-control {
+  text-align: center !important;
+  max-width: 100px !important;
+  border: none !important;
+  border-bottom: 1px solid #000 !important;
 }
