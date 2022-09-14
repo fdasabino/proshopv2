@@ -1,6 +1,8 @@
 import { Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 
+import { Toaster } from "react-hot-toast";
+
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
@@ -11,6 +13,31 @@ import CartScreen from "./screens/CartScreen/CartScreen";
 function App() {
   return (
     <>
+      <Toaster
+        position="bottom-left"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
       <Header />
       <main className="py-3">
         <Container>

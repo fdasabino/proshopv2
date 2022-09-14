@@ -3,6 +3,7 @@ import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../redux-store/actions/cartActions";
 import { Row, Col, ListGroup, Image, Form, Button, Card, Alert, Badge } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { FaTimes } from "react-icons/fa";
 
 const CartScreen = () => {
@@ -16,6 +17,7 @@ const CartScreen = () => {
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
+    toast.error("Item removed from cart");
   };
 
   const checkoutHandler = () => {
@@ -55,7 +57,10 @@ const CartScreen = () => {
                     <Form.Control
                       as="select"
                       value={item.qty}
-                      onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
+                      onChange={(e) => {
+                        dispatch(addToCart(item.product, Number(e.target.value)));
+                        toast.success("Your cart has been updated");
+                      }}
                     >
                       {[...Array(item.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>

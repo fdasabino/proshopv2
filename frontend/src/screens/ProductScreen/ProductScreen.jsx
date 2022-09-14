@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProductDetails } from "../../redux-store/actions/productActions";
 import Rating from "../../components/Rating/Rating";
 import Spinner from "../../components/Spinner/Spinner";
+import toast from "react-hot-toast";
 
 const ProductScreen = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const ProductScreen = () => {
 
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
+    toast.success("Item added to cart");
   };
 
   return (
