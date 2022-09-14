@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <div className="d-flex align-items-center flex-column gap-5">
-      <h1>Latest Products</h1>
+      <h3>Latest Products</h3>
       {loading ? (
         <Spinner />
       ) : error ? (
