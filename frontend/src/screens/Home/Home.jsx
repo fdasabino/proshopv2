@@ -1,33 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { Row, Col, Alert } from "react-bootstrap";
 
-import axios from "axios";
-
+import Spinner from "../../components/Spinner/Spinner";
 import Product from "../../components/Product/Product";
 
-import { Row, Col } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { listProducts } from "../../redux-store/actions/productActions";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+
+  const { loading, error, products } = productList;
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get("/api/products");
-      setProducts(data);
-    };
-    fetchProducts();
-  }, []);
+    dispatch(listProducts());
+  }, [dispatch]);
 
   return (
-    <>
+    <div className="d-flex align-items-center flex-column gap-5">
       <h1>Latest Products</h1>
-      <Row>
-        {products.map((product) => (
-          <Col key={product._id}>
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
-    </>
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <Alert variant="danger">{error}</Alert>
+      ) : (
+        <Row>
+          {products.map((product) => (
+            <Col key={product._id}>
+              <Product product={product} />
+            </Col>
+          ))}
+        </Row>
+      )}
+    </div>
   );
 };
 

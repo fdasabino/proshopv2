@@ -17,7 +17,7 @@ main {
 }
 
 .navbar-toggler:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .navbar-toggler:focus {
@@ -31,5 +31,5 @@ main {
   margin-right: 1rem !important;
 }
 .nav-link:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
