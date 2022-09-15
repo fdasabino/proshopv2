@@ -45,7 +45,7 @@ main {
 
 .form-control {
   text-align: center !important;
-  min-width: fit-content !important;
+  width: fit-content !important;
   border: none !important;
   border-bottom: 1px solid #000 !important;
   cursor: pointer;
