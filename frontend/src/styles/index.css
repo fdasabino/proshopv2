@@ -41,8 +41,8 @@ main {
 .form-control {
   text-align: center !important;
   min-width: fit-content !important;
-  max-width: 120px !important;
   border: none !important;
   border-bottom: 1px solid #000 !important;
+  border-top: 1px solid #000 !important;
   cursor: pointer;
 }

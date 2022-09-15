@@ -53,7 +53,7 @@ const CartScreen = () => {
                     <Link to={`/products/${item.product}`}>{item.name}</Link>
                   </Col>
                   <Col md={3}>${item.price}</Col>
-                  <Col md={2} className="d-flex align-items-center justify-content-center gap-3">
+                  <Col md={2} className="d-flex align-items-center justify-content-center gap-2">
                     <Form.Control
                       as="select"
                       value={item.qty}

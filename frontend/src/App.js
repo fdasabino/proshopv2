@@ -9,12 +9,13 @@ import Footer from "./components/Footer/Footer";
 import Home from "./screens/Home/Home";
 import ProductScreen from "./screens/ProductScreen/ProductScreen";
 import CartScreen from "./screens/CartScreen/CartScreen";
+import LoginScreen from "./screens/LoginScreen/LoginScreen";
 
 function App() {
   return (
     <>
       <Toaster
-        position="bottom-left"
+        position="top-center"
         reverseOrder={false}
         gutter={8}
         containerClassName=""
@@ -48,6 +49,7 @@ function App() {
               <Route path=":id" element={<CartScreen />} />
               <Route path="" element={<CartScreen />} />
             </Route>
+            <Route path="/login" element={<LoginScreen />} />
           </Routes>
         </Container>
       </main>
