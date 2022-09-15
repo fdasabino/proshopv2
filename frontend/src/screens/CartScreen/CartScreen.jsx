@@ -45,21 +45,17 @@ const CartScreen = () => {
           <ListGroup variant="flush">
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product} className="p-3 border mb-2">
-                <Row className="text-center gap-1 align-items-center justify-content-center ">
-                  <Col md={2}>
-                    <Image src={item.image} alt={item.name} fluid={true} />
-                  </Col>
-                  <Col md={4}>
+                <Row className="mb-3">
+                  <Col className="d-flex justify-content-center text-center">
                     <Link to={`/products/${item.product}`}>{item.name}</Link>
                   </Col>
+                </Row>
+                <Row className="text-center gap-1 align-items-center justify-content-center ">
                   <Col md={3}>
-                    <FaTimes
-                      onClick={() => removeFromCartHandler(item.product)}
-                      className="removebtn"
-                    />{" "}
-                    ${item.price}
+                    <Image src={item.image} alt={item.name} fluid={true} />
                   </Col>
-                  <Col md={2} className="d-flex align-items-center justify-content-center gap-2">
+
+                  <Col md={3} className="d-flex align-items-center justify-content-center gap-2">
                     <Form.Control
                       as="select"
                       value={item.qty}
@@ -74,6 +70,14 @@ const CartScreen = () => {
                         </option>
                       ))}
                     </Form.Control>
+                  </Col>
+
+                  <Col md={4}>
+                    <FaTimes
+                      onClick={() => removeFromCartHandler(item.product)}
+                      className="removeBtn"
+                    />{" "}
+                    ${item.price}
                   </Col>
                 </Row>
               </ListGroup.Item>

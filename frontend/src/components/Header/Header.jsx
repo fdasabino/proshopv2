@@ -3,7 +3,6 @@ import {
   FaUser,
   FaShoppingCart,
   FaHome,
-  FaHouseUser,
   FaProjectDiagram,
   FaUserPlus,
   FaSignOutAlt,
@@ -18,7 +17,6 @@ import toast from "react-hot-toast";
 
 const Header = () => {
   const dispatch = useDispatch();
-
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
@@ -32,7 +30,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar expand="lg" className="mb-3 p-4">
+      <Navbar expand="lg" bg="light" className="mb-3 p-4 fixed-top">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
             <FaProjectDiagram /> PROSHOP
@@ -55,7 +53,6 @@ const Header = () => {
 
                 {userInfo ? (
                   <div className="d-flex align-items-center justify-content-center">
-                    <FaHouseUser color="black" />
                     <NavDropdown
                       title={userInfo && userInfo.name.split(" ")[0]}
                       id={`offcanvasNavbarDropdown-expand`}

@@ -6,9 +6,10 @@
 
 main {
   min-height: 100vh;
+  margin: 10rem 0;
 }
 
-.removebtn {
+.removeBtn {
   color: red;
   font-size: 20px;
   cursor: pointer;
@@ -58,19 +59,19 @@ form-control::placeholder {
 /* or, for legacy browsers */
 
 form-control::-webkit-input-placeholder {
-  text-align: center;
+  text-align: center !important;
 }
 
 form-control:-moz-placeholder {
   /* Firefox 18- */
-  text-align: center;
+  text-align: center !important;
 }
 
 form-control::-moz-placeholder {
   /* Firefox 19+ */
-  text-align: center;
+  text-align: center !important;
 }
 
 form-control:-ms-input-placeholder {
-  text-align: center;
+  text-align: center !important;
 }

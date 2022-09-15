@@ -41,7 +41,7 @@ function App() {
         }}
       />
       <Header />
-      <main className="py-3">
+      <main>
         <Container>
           <Routes>
             <Route path="/" element={<Home />} />
