@@ -3,9 +3,11 @@ import {
   FaUser,
   FaShoppingCart,
   FaHome,
+  FaHouseUser,
   FaProjectDiagram,
   FaUserPlus,
   FaSignOutAlt,
+  FaSignInAlt,
   FaListUl,
 } from "react-icons/fa";
 import { logout } from "../../redux-store/actions/userActions";
@@ -45,47 +47,54 @@ const Header = () => {
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>MENU</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end align-items-center flex-grow-1 pe-3">
-                <Nav.Link as={Link} to="/" className="text-uppercase">
+              <Nav className="align-items-start justify-content-end  flex-grow-1">
+                <Nav.Link as={Link} to="/" className="text-uppercase gap-1">
                   <FaHome />
                   Home
                 </Nav.Link>
+
                 {userInfo ? (
-                  <NavDropdown
-                    title={userInfo && userInfo.name.split(" ")[0]}
-                    id={`offcanvasNavbarDropdown-expand`}
-                    className="text-uppercase"
-                  >
-                    <NavDropdown.Item as={Link} to="/login" className="text-uppercase">
-                      <FaUser /> Profile
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/" className="text-uppercase">
-                      <FaListUl /> Orders
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={logoutHandler} className="text-uppercase">
-                      <FaSignOutAlt />
-                      Sign out
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <FaHouseUser color="black" />
+                    <NavDropdown
+                      title={userInfo && userInfo.name.split(" ")[0]}
+                      id={`offcanvasNavbarDropdown-expand`}
+                      className="text-uppercase"
+                    >
+                      <NavDropdown.Item as={Link} to="/login" className="text-uppercase">
+                        <FaUser /> Profile
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to="/" className="text-uppercase">
+                        <FaListUl /> Orders
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item onClick={logoutHandler} className="text-uppercase">
+                        <FaSignOutAlt />
+                        Sign out
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </div>
                 ) : (
-                  <NavDropdown
-                    title="Login"
-                    id={`offcanvasNavbarDropdown-expand`}
-                    className="text-uppercase"
-                  >
-                    <NavDropdown.Item as={Link} to="/login" className="text-uppercase">
-                      <FaUser /> Sign in
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/register" className="text-uppercase">
-                      <FaUserPlus /> Sign up
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <div className="d-flex align-items-center gap-1">
+                    <FaSignInAlt color="black" />
+                    <NavDropdown
+                      className="text-black"
+                      title="Login"
+                      id={`offcanvasNavbarDropdown-expand`}
+                    >
+                      <NavDropdown.Item as={Link} to="/login" className="text-uppercase">
+                        <FaUser /> Sign in
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to="/register" className="text-uppercase">
+                        <FaUserPlus /> Sign up
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </div>
                 )}
 
-                <Nav.Link as={Link} to="/cart" className="text-uppercase">
-                  <FaShoppingCart />{" "}
-                  <Badge bg="info" className="p-2 rounded-circle">
+                <Nav.Link as={Link} to="/cart" className="text-uppercase gap-1">
+                  <FaShoppingCart /> Cart
+                  <Badge bg="warning" className="p-2 rounded-circle">
                     {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
                   </Badge>
                 </Nav.Link>

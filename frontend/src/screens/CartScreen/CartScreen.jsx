@@ -52,7 +52,13 @@ const CartScreen = () => {
                   <Col md={4}>
                     <Link to={`/products/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col md={3}>${item.price}</Col>
+                  <Col md={3}>
+                    <FaTimes
+                      onClick={() => removeFromCartHandler(item.product)}
+                      className="removebtn"
+                    />{" "}
+                    ${item.price}
+                  </Col>
                   <Col md={2} className="d-flex align-items-center justify-content-center gap-2">
                     <Form.Control
                       as="select"
@@ -68,10 +74,6 @@ const CartScreen = () => {
                         </option>
                       ))}
                     </Form.Control>
-                    <FaTimes
-                      onClick={() => removeFromCartHandler(item.product)}
-                      className="removebtn"
-                    />
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -87,7 +89,7 @@ const CartScreen = () => {
                 <h4>Order Summary</h4>
                 <hr />
                 <h5>
-                  <Badge bg="info" className="px-2 rounded-circle">
+                  <Badge bg="warning" className="px-2 rounded-circle">
                     {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
                   </Badge>{" "}
                   {cartItems.length === 1 && "Item"}

@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="bg-black">
       <Container>
         <Row>
-          <Col className="text-center py-3">
+          <Col className="text-center text-white py-3">
             &copy; Copyright - 2022 <br />
             <Navbar.Brand as={Link} to="/">
               <FaProjectDiagram /> PROSHOP
