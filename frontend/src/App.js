@@ -10,13 +10,14 @@ import Home from "./screens/Home/Home";
 import ProductScreen from "./screens/ProductScreen/ProductScreen";
 import CartScreen from "./screens/CartScreen/CartScreen";
 import LoginScreen from "./screens/LoginScreen/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 
 function App() {
   return (
     <>
       <Toaster
         position="top-center"
-        reverseOrder={false}
+        reverseOrder={true}
         gutter={8}
         containerClassName=""
         containerStyle={{}}
@@ -50,6 +51,7 @@ function App() {
               <Route path="" element={<CartScreen />} />
             </Route>
             <Route path="/login" element={<LoginScreen />} />
+            <Route path="/register" element={<RegisterScreen />} />
           </Routes>
         </Container>
       </main>

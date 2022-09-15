@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 //reducers
 import { productReducer, productDetailsReducer } from "./reducers/productReducer";
 import { cartReducer } from "./reducers/cartReducer";
-import { userLoginReducer } from "./reducers/userReducer";
+import { userLoginReducer, userRegisterReducer } from "./reducers/userReducer";
 
 //reducers being combined into one function
 export const rootReducer = combineReducers({
@@ -11,4 +11,5 @@ export const rootReducer = combineReducers({
   productDetails: productDetailsReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
 });

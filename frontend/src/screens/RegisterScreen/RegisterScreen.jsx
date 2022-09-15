@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux-store/actions/userActions";
+import { register } from "../../redux-store/actions/userActions";
 import { Container, Form, Button, Row, Col, Alert } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,8 +19,8 @@ const LoginScreen = () => {
   const location = useLocation();
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
     if (userInfo) {
@@ -28,17 +31,31 @@ const LoginScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match. Please try again");
+    } else {
+      dispatch(register(name, email, password));
+    }
   };
 
   return (
     <Container className="d-flex align-items-center flex-column gap-5">
-      <h2>Sign In</h2>
+      <h2>Sign Up</h2>
+      {message && <Alert variant="danger">{message}</Alert>}
       {error && <Alert variant="danger">{error}</Alert>}
       {loading && <Spinner />}
       <Row>
         <Col>
           <Form onSubmit={submitHandler} className="d-flex align-items-center flex-column gap-3">
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -57,16 +74,23 @@ const LoginScreen = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+              Register
             </Button>
             <Row>
               <Col>
                 <Form.Text>
-                  New to out store?{" "}
-                  <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-                    Sign Up
-                  </Link>
+                  Have an account?{" "}
+                  <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>Login</Link>
                 </Form.Text>
               </Col>
             </Row>
@@ -77,4 +101,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
