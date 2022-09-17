@@ -74,3 +74,7 @@ form-control::-moz-placeholder {
 form-control:-ms-input-placeholder {
   text-align: center !important;
 }
+
+.accordion-header .bg-custom {
+  background: #000 !important;
+}
