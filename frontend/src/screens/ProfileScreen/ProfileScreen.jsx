@@ -22,16 +22,19 @@ const ProfileScreen = () => {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
+
   useEffect(() => {
     if (!userInfo) {
       navigate("/login");
-    } else if (!user || !user.name) {
+    } else if (!user || !user.name || success) {
       dispatch({ type: USER_CONSTANT_TYPES.USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetails("profile"));
     } else {
       setName(user.name);
     }
-  }, [dispatch, navigate, userInfo, user]);
+  }, [dispatch, navigate, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
