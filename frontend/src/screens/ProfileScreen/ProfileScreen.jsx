@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails } from "../../redux-store/actions/userActions";
+import { USER_CONSTANT_TYPES } from "../../redux-store/constants/userConstants";
+import { getUserDetails, updateUserProfile } from "../../redux-store/actions/userActions";
 import { Container, Form, Button, Row, Col, Alert } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
@@ -26,6 +27,7 @@ const ProfileScreen = () => {
     if (!userInfo) {
       navigate("/login");
     } else if (!user || !user.name) {
+      dispatch({ type: USER_CONSTANT_TYPES.USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetails("profile"));
     } else {
       setName(user.name);
@@ -39,6 +41,8 @@ const ProfileScreen = () => {
       setMessage("Passwords do not match. Please try again");
     } else {
       //dispatch update profile
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      toast.success("User profile updated...");
     }
   };
 
