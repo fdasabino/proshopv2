@@ -58,7 +58,7 @@ const Header = () => {
                       id={`offcanvasNavbarDropdown-expand`}
                       className="text-uppercase"
                     >
-                      <NavDropdown.Item as={Link} to="/login" className="text-uppercase">
+                      <NavDropdown.Item as={Link} to="/profile" className="text-uppercase">
                         <FaUser /> Profile
                       </NavDropdown.Item>
                       <NavDropdown.Item as={Link} to="/" className="text-uppercase">
