@@ -8,14 +8,24 @@ const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
+  const itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+  const shippingPrice = Number(itemsPrice > 100 ? 0 : 10);
+
+  const taxPrice = Number(0.1 * itemsPrice);
+
+  const totalPrice = Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice);
+
+  const placeOrderHandler = () => {};
+
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
-        <Col md={8}>
+        <Col md={7}>
+          <h4>Shipping</h4>
+          <hr />
           <ListGroup variant="flush">
-            <h4>Shipping</h4>
-            <hr />
             <ListGroup.Item>
               <p>
                 <strong className="me-3 fw-bold">Address:</strong>
@@ -48,8 +58,8 @@ const PlaceOrderScreen = () => {
                 <Alert variant="warning">Your cart is empty</Alert>
               ) : (
                 <ListGroup variant="flush">
-                  {cart.cartItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
+                  {cart.cartItems.map((item) => (
+                    <ListGroup.Item key={item.product}>
                       <Row className="d-flex align-items-center justify-content-evenly">
                         <Col md={1}>
                           <Image src={item.image} alt={item.name} fluid />
@@ -72,16 +82,46 @@ const PlaceOrderScreen = () => {
             </ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col md={4}>
+        <Col md={5}>
+          <h4>Order Summary</h4>
+          <hr />
           <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h4>Order Summary</h4>
-              <hr />
-              <Row className="d-flex align-items-center justify-content-evenly text-center">
-                <Col>Items</Col>
-                <Col>$13213</Col>
-              </Row>
-            </ListGroup.Item>
+            <Card>
+              <ListGroup.Item>
+                <Row className="d-flex align-items-center justify-content-evenly text-center">
+                  <Col>Items:</Col>
+                  <Col>${itemsPrice.toFixed(2)}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row className="d-flex align-items-center justify-content-evenly text-center">
+                  <Col>Shipping:</Col>
+                  <Col>${shippingPrice.toFixed(2)}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row className="d-flex align-items-center justify-content-evenly text-center">
+                  <Col>Tax:</Col>
+                  <Col>${taxPrice.toFixed(2)}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row className="d-flex align-items-start justify-content-evenly text-center">
+                  <Col>Total:</Col>
+                  <Col>${totalPrice.toFixed(2)}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item className="d-flex align-items-center justify-content-evenly text-center">
+                <Button
+                  type="button"
+                  className="btn btn-block "
+                  disabled={cart.cartItems === 0}
+                  onClick={placeOrderHandler}
+                >
+                  Place Order
+                </Button>
+              </ListGroup.Item>
+            </Card>
           </ListGroup>
         </Col>
       </Row>
