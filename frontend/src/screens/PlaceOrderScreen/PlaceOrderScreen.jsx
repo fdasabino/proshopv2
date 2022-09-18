@@ -19,10 +19,9 @@ const PlaceOrderScreen = () => {
     try {
       if (success) {
         navigate(`/orders/${order.createdOrder._id}`);
-        console.log(order);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     // eslint-disable-next-line
   }, [navigate, success]);

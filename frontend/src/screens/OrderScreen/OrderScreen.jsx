@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { getOrderDetails } from "../../redux-store/actions/orderActions";
-import { Row, Col, ListGroup, Image, Card, Alert } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Card, Alert, Accordion } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
@@ -15,8 +15,10 @@ const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrderDetails(orderId));
-  }, [orderId]);
+    if (!order || order._id !== orderId) {
+      dispatch(getOrderDetails(orderId));
+    }
+  }, [dispatch, order, orderId]);
 
   return loading ? (
     <Spinner />
@@ -24,11 +26,22 @@ const PlaceOrderScreen = () => {
     <Alert variant="danger">{error}</Alert>
   ) : (
     <Row>
+      <h4>Order: {order._id}</h4>
+      <hr />
       <Col md={7}>
-        <h4>Order: {order._id}</h4>
+        <h4>Shipping Information</h4>
         <hr />
+
         <ListGroup variant="flush">
           <ListGroup.Item>
+            <p>
+              <strong className="me-3 fw-bold">Customer:</strong>
+              {order.user.name}
+            </p>
+            <p>
+              <strong className="me-3 fw-bold">Email Address:</strong>
+              <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+            </p>
             <p>
               <strong className="me-3 fw-bold">Address:</strong>
               {order.shippingAddress.address}
@@ -46,12 +59,6 @@ const PlaceOrderScreen = () => {
               {order.shippingAddress.country}
             </p>
           </ListGroup.Item>
-          <ListGroup.Item className="my-3">
-            <h4>Payment Method</h4>
-            <hr />
-            <strong className="fw-bold me-3">Method:</strong>
-            {order.paymentMethod}
-          </ListGroup.Item>
 
           <ListGroup.Item className="my-3">
             <h4>Order Items</h4>
@@ -59,27 +66,36 @@ const PlaceOrderScreen = () => {
             {order.orderItems.length === 0 ? (
               <Alert variant="warning">Your order is empty</Alert>
             ) : (
-              <ListGroup variant="flush">
-                {order.orderItems.map((item) => (
-                  <ListGroup.Item key={item.product}>
-                    <Row className="d-flex align-items-center justify-content-evenly">
-                      <Col md={1}>
-                        <Image src={item.image} alt={item.name} fluid />
-                      </Col>
+              <Accordion>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Review your order</Accordion.Header>
+                  <Accordion.Body>
+                    <ListGroup variant="flush">
+                      {order.orderItems.map((item) => (
+                        <ListGroup.Item key={item.product}>
+                          <Row className="d-flex align-items-center justify-content-evenly">
+                            <Col>
+                              <Image src={item.image} alt={item.name} fluid />
+                            </Col>
 
-                      <Col className="small text-center">
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>
-                      </Col>
+                            <Col className="small text-center">
+                              <Link to={`/product/${item.product}`}>{item.name}</Link>
+                            </Col>
 
-                      <Col className="small text-center">
-                        {item.qty}x ${item.price}
-                      </Col>
+                            <Col className="small text-center">
+                              {item.qty}x ${item.price}
+                            </Col>
 
-                      <Col className="small text-center fw-bold">${item.qty * item.price}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
+                            <Col className="small text-center fw-bold">
+                              ${item.qty * item.price}
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             )}
           </ListGroup.Item>
         </ListGroup>
@@ -114,6 +130,22 @@ const PlaceOrderScreen = () => {
               </Row>
             </ListGroup.Item>
           </Card>
+          <ListGroup.Item className="my-3">
+            <h4>Payment Method</h4>
+            <hr />
+            <strong className="fw-bold me-3">Method:</strong>
+            {order.paymentMethod}
+          </ListGroup.Item>
+          <ListGroup.Item>
+            {order.isPaid && <Alert variant="success">Order paid on: {order.paidAt}</Alert>}
+            {!order.isPaid && <Alert variant="danger">Order not paid</Alert>}
+          </ListGroup.Item>
+          <ListGroup.Item>
+            {order.isDelivered && (
+              <Alert variant="success">Order delivered on: {order.deliveredAt}</Alert>
+            )}
+            {!order.isDelivered && <Alert variant="danger">Order not delivered</Alert>}
+          </ListGroup.Item>
         </ListGroup>
       </Col>
     </Row>
