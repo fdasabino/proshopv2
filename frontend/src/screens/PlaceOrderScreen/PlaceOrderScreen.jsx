@@ -6,16 +6,23 @@ import { Link, useNavigate } from "react-router-dom";
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 
 const PlaceOrderScreen = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
-
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
+  const navigate = useNavigate();
+
+  const cart = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (success) {
-      navigate(`/order/${order._id}`);
+    try {
+      if (success) {
+        navigate(`/orders/${order.createdOrder._id}`);
+        console.log(order);
+      }
+    } catch (error) {
+      console.log(error);
     }
     // eslint-disable-next-line
   }, [navigate, success]);
