@@ -7,12 +7,15 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
     <Nav className="d-flex justify-content-center my-4">
       <Nav.Item>
         {step1 ? (
-          <Link className="text-lowercase small text-decoration-none px-0 py-1 d-none" to="/login">
+          <Link
+            className="text-lowercase small text-decoration-none mx-1 px-0 py-1 d-none"
+            to="/login"
+          >
             Sign in
           </Link>
         ) : (
           <Nav.Link
-            className="text-lowercase small text-decoration-none px-0 py-1 text-muted d-none"
+            className="text-lowercase small text-decoration-none mx-1 px-0 py-1 text-muted d-none"
             disabled
           >
             Sign in
@@ -21,12 +24,12 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
       </Nav.Item>
       <Nav.Item>
         {step2 ? (
-          <Link className="text-lowercase small text-decoration-none px-0 py-1" to="/shipping">
+          <Link className="text-lowercase small text-decoration-none mx-1 px-0 py-1" to="/shipping">
             Shipping
           </Link>
         ) : (
           <Nav.Link
-            className="text-lowercase small text-decoration-none px-0 py-1 text-muted"
+            className="text-lowercase small text-decoration-none mx-1 px-0 py-1 text-muted"
             disabled
           >
             Shipping
@@ -35,12 +38,12 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
       </Nav.Item>
       <Nav.Item>
         {step3 ? (
-          <Link className="text-lowercase small text-decoration-none px-0 py-1" to="/payment">
+          <Link className="text-lowercase small text-decoration-none mx-1 px-0 py-1" to="/payment">
             Payment method
           </Link>
         ) : (
           <Nav.Link
-            className="text-lowercase small text-decoration-none px-0 py-1 text-muted"
+            className="text-lowercase small text-decoration-none mx-1 px-0 py-1 text-muted"
             disabled
           >
             Payment method
@@ -49,12 +52,15 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
       </Nav.Item>
       <Nav.Item>
         {step4 ? (
-          <Link className="text-lowercase small text-decoration-none px-0 py-1" to="/placeorder">
+          <Link
+            className="text-lowercase small text-decoration-none mx-1 px-0 py-1"
+            to="/placeorder"
+          >
             Place Order
           </Link>
         ) : (
           <Nav.Link
-            className="text-lowercase small text-decoration-none px-0 py-1 text-muted"
+            className="text-lowercase small text-decoration-none mx-1 px-0 py-1 text-muted"
             disabled
           >
             Place order
