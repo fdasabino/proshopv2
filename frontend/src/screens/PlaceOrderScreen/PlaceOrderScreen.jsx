@@ -1,22 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { createOrder } from "../../redux-store/actions/orderActions";
 import { Button, Row, Col, ListGroup, Image, Card, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 
 const PlaceOrderScreen = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+    // eslint-disable-next-line
+  }, [navigate, success]);
+
   const itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
-
   const shippingPrice = Number(itemsPrice > 100 ? 0 : 10);
+  const taxPrice = Number(0.1 * itemsPrice.toFixed(2));
+  const totalPrice =
+    Number(itemsPrice.toFixed(2)) + Number(shippingPrice.toFixed(2)) + Number(taxPrice.toFixed(2));
 
-  const taxPrice = Number(0.1 * itemsPrice);
-
-  const totalPrice = Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice);
-
-  const placeOrderHandler = () => {};
+  const placeOrderHandler = () => {
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      })
+    );
+  };
 
   return (
     <div>
@@ -111,7 +133,8 @@ const PlaceOrderScreen = () => {
                   <Col>${totalPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item className="d-flex align-items-center justify-content-evenly text-center">
+              <ListGroup.Item className="d-flex align-items-center flex-column text-center">
+                {error && <Alert variant="danger">{error}</Alert>}
                 <Button
                   type="button"
                   className="btn btn-block "
