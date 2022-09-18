@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
 import { ORDER_CONSTANT_TYPES } from "../../redux-store/constants/orderConstants";
+import { CART_CONSTANT_TYPES } from "../../redux-store/constants/cartConstants";
 
 const PlaceOrderScreen = () => {
   const { id } = useParams();
@@ -43,12 +44,13 @@ const PlaceOrderScreen = () => {
         addPayPalScript();
       } else {
         setSdkReady(true);
+        localStorage.setItem("cartItems", []);
+        dispatch({ type: CART_CONSTANT_TYPES.CART_ITEMS_RESET });
       }
     }
   }, [dispatch, order, orderId, successPay]);
 
   const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 

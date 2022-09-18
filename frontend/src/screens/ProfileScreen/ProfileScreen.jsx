@@ -66,7 +66,7 @@ const ProfileScreen = () => {
           {errorOrders && <Alert variant="danger">{errorOrders}</Alert>}
 
           {orders?.map((order) => (
-            <ListGroup key={order._id}>
+            <ListGroup key={order._id} className="my-4">
               <Accordion>
                 <Accordion.Item eventKey="0">
                   <Accordion.Header>{order._id.toUpperCase()}</Accordion.Header>
