@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../../redux-store/actions/cartActions";
 import { Container, Form, Button } from "react-bootstrap";
-import Spinner from "../../components/Spinner/Spinner";
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 import toast from "react-hot-toast";
 
