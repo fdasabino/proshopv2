@@ -59,18 +59,45 @@ const ProfileScreen = () => {
       {error && <Alert variant="danger">{error}</Alert>}
       {loading && <Spinner />}
       <Row className="d-flex align-items-between">
-        <Col md={9}>
+        <Col md={8}>
           <h4>Orders</h4>
           <hr />
           {loadingOrders && <Spinner />}
           {errorOrders && <Alert variant="danger">{errorOrders}</Alert>}
+
+          {orders?.map((order) => (
+            <ListGroup key={order._id}>
+              <Accordion>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>{order._id.toUpperCase()}</Accordion.Header>
+                  <Accordion.Body>
+                    <p>DATE: {order.createdAt}</p>
+                    <hr />
+                    <p>ORDER AMOUNT: ${order.totalPrice}</p>
+                    <hr />
+                    <p>PAID: {order.isPaid ? "YES" : "NO"}</p>
+                    <hr />
+                    <p>DELIVERED: {order.isDelivered ? "YES" : "NO"}</p>
+                    <hr />
+                    <Button
+                      type="button"
+                      className="btn block"
+                      onClick={() => navigate(`/orders/${order._id}`)}
+                    >
+                      Details
+                    </Button>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </ListGroup>
+          ))}
         </Col>
 
-        <Col md={3}>
+        <Col md={4} className="my-4">
           <Accordion>
             <Accordion.Item eventKey="0">
               <Accordion.Header>
-                <hr /> <h5>Update Profile</h5>
+                <h5>Update Profile</h5>
               </Accordion.Header>
               <Accordion.Body>
                 <Form
