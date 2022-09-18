@@ -33,6 +33,8 @@ const CartScreen = () => {
   return (
     <Row className="d-flex justify-content-center align-items-start">
       <h3 className="text-center">Shopping Cart</h3>
+      <hr />
+
       <Col md={8} className="my-3">
         {cartItems.length === 0 ? (
           <Alert variant="info" className="d-flex flex-column align-items-center text-center gap-3">

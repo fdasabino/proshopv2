@@ -20,21 +20,16 @@ const ShippingScreen = () => {
   };
 
   const [address, setAddress] = useState(shippingAddress.address || initialState.address);
-
   const [city, setCity] = useState(shippingAddress.city || initialState.city);
-
   const [postalCode, setPostalCode] = useState(
     shippingAddress.postalCode || initialState.postalCode
   );
-
   const [country, setCountry] = useState(shippingAddress.country || initialState.country);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      saveShippingAddress({ address, city, postalCode, country }),
-      toast.success("Address saved successfully...")
-    );
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
+    toast.success("Address saved successfully...");
     navigate("/payment");
   };
 

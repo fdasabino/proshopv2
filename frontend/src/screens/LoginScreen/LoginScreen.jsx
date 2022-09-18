@@ -33,10 +33,11 @@ const LoginScreen = () => {
 
   return (
     <Container className="d-flex align-items-center flex-column gap-5">
-      <h2>Sign In</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       {loading && <Spinner />}
       <Row>
+        <h3 className="text-center py-3">Sign In</h3>
+        <hr />
         <Col>
           <Form onSubmit={submitHandler} className="d-flex align-items-center flex-column gap-3">
             <Form.Group className="mb-3" controlId="email">

@@ -40,11 +40,12 @@ const RegisterScreen = () => {
 
   return (
     <Container className="d-flex align-items-center flex-column gap-5">
-      <h2>Sign Up</h2>
       {message && <Alert variant="danger">{message}</Alert>}
       {error && <Alert variant="danger">{error}</Alert>}
       {loading && <Spinner />}
       <Row>
+        <h3 className="text-center py-3">Sign Up</h3>
+        <hr />
         <Col>
           <Form onSubmit={submitHandler} className="d-flex align-items-center flex-column gap-3">
             <Form.Group className="mb-3" controlId="email">

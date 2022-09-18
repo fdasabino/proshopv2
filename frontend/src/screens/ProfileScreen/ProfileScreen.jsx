@@ -49,7 +49,7 @@ const ProfileScreen = () => {
 
   return (
     <Container className="d-flex flex-column gap-3">
-      <h2 className="text-center">User Profile</h2>
+      <h3 className="text-center">User Profile</h3>
       {message && <Alert variant="danger">{message}</Alert>}
       {error && <Alert variant="danger">{error}</Alert>}
       {loading && <Spinner />}

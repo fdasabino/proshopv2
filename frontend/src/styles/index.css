@@ -54,7 +54,6 @@ main {
 form-control::placeholder {
   text-align: center !important;
 }
-
 /* or, for legacy browsers */
 
 form-control::-webkit-input-placeholder {
@@ -75,6 +74,44 @@ form-control:-ms-input-placeholder {
   text-align: center !important;
 }
 
-.accordion-header .bg-custom {
-  background: #000 !important;
+.btn-primary {
+  border: 1px solid #000 !important;
+}
+.btn-success {
+  border: 1px solid #4bbf73 !important;
+}
+.btn-info {
+  border: 1px solid #1f9bcf !important;
+}
+.btn-warning {
+  border: 1px solid #f0ad4e !important;
+}
+.btn-danger {
+  border: 1px solid #d9534f !important;
+}
+
+.btn-primary:hover {
+  border: 1px solid #000 !important;
+  background: #fff !important;
+  color: #000 !important;
+}
+.btn-success:hover {
+  border: 1px solid #4bbf73 !important;
+  background: #fff !important;
+  color: #000 !important;
+}
+.btn-info:hover {
+  border: 1px solid #1f9bcf !important;
+  background: #fff !important;
+  color: #000 !important;
+}
+.btn-warning:hover {
+  border: 1px solid #f0ad4e !important;
+  background: #fff !important;
+  color: #000 !important;
+}
+.btn-danger:hover {
+  border: 1px solid #d9534f !important;
+  background: #fff !important;
+  color: #000 !important;
 }
