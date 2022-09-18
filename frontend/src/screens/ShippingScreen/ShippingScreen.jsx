@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../../redux-store/actions/cartActions";
 import { Container, Form, Button } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
+import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 import toast from "react-hot-toast";
 
 const ShippingScreen = () => {
@@ -37,6 +38,7 @@ const ShippingScreen = () => {
     <Container>
       <h3 className="text-center">Shipping Address</h3>
       <hr />
+      <CheckoutSteps step1 step2 />
       <Form
         onSubmit={submitHandler}
         className="d-flex flex-column align-items-center gap-3 py-3 text-center"

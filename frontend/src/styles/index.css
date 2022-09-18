@@ -115,3 +115,7 @@ form-control:-ms-input-placeholder {
   background: #fff !important;
   color: #000 !important;
 }
+
+.small {
+  font-size: 12px !important;
+}
