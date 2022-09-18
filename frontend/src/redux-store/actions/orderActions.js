@@ -117,7 +117,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
     const { data } = await axios.get("/api/orders/myorders", config);
 
     dispatch({
-      type: ORDER_CONSTANT_TYPES.ORDER_DETAILS_SUCCESS,
+      type: ORDER_CONSTANT_TYPES.ORDER_MY_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {

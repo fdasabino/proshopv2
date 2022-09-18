@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_CONSTANT_TYPES } from "../../redux-store/constants/userConstants";
 import { getUserDetails, updateUserProfile } from "../../redux-store/actions/userActions";
-import { Container, Form, Button, Row, Col, Alert, Accordion } from "react-bootstrap";
+import { listMyOrders } from "../../redux-store/actions/orderActions";
+import { Container, Form, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
 
@@ -25,12 +26,16 @@ const ProfileScreen = () => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
+  const orderMyList = useSelector((state) => state.orderMyList);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderMyList;
+
   useEffect(() => {
     if (!userInfo) {
       navigate("/login");
     } else if (!user || !user.name || success) {
       dispatch({ type: USER_CONSTANT_TYPES.USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetails("profile"));
+      dispatch(listMyOrders());
     } else {
       setName(user.name);
     }
@@ -57,6 +62,8 @@ const ProfileScreen = () => {
         <Col md={9}>
           <h4>Orders</h4>
           <hr />
+          {loadingOrders && <Spinner />}
+          {errorOrders && <Alert variant="danger">{errorOrders}</Alert>}
         </Col>
 
         <Col md={3}>
