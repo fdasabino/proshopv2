@@ -7,6 +7,8 @@ import {
   FaUserPlus,
   FaSignOutAlt,
   FaSignInAlt,
+  FaUsersCog,
+  FaDatabase,
   FaListUl,
 } from "react-icons/fa";
 import { logout } from "../../redux-store/actions/userActions";
@@ -61,9 +63,35 @@ const Header = () => {
                       <NavDropdown.Item as={Link} to="/profile" className="text-uppercase">
                         <FaUser /> Profile
                       </NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to="/" className="text-uppercase">
-                        <FaListUl /> Orders
-                      </NavDropdown.Item>
+
+                      {userInfo.isAdmin && (
+                        <>
+                          <NavDropdown.Item
+                            as={Link}
+                            to="/admin/orderlist"
+                            className="text-uppercase"
+                          >
+                            <FaListUl /> Manage Orders
+                          </NavDropdown.Item>
+
+                          <NavDropdown.Item
+                            as={Link}
+                            to="/admin/userlist"
+                            className="text-uppercase"
+                          >
+                            <FaUsersCog /> Manage users
+                          </NavDropdown.Item>
+
+                          <NavDropdown.Item
+                            as={Link}
+                            to="/admin/productlist"
+                            className="text-uppercase"
+                          >
+                            <FaDatabase /> Manage Products
+                          </NavDropdown.Item>
+                        </>
+                      )}
+
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={logoutHandler} className="text-uppercase">
                         <FaSignOutAlt />
