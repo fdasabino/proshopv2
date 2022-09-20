@@ -61,7 +61,7 @@ const UserListScreen = () => {
                       <Button
                         type="button"
                         className="btn block"
-                        onClick={() => navigate(`/user/${user._id}`)}
+                        onClick={() => navigate(`/admin/user/${user._id}/edit`)}
                       >
                         Edit Details
                       </Button>
