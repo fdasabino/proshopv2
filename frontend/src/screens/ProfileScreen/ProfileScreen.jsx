@@ -6,7 +6,6 @@ import { getUserDetails, updateUserProfile } from "../../redux-store/actions/use
 import { listMyOrders } from "../../redux-store/actions/orderActions";
 import { Container, Form, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
-import { FaArrowRight } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const ProfileScreen = () => {

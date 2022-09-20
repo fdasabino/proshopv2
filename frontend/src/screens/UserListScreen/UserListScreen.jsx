@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listUsers } from "../../redux-store/actions/userActions";
+import { listUsers, deleteUser } from "../../redux-store/actions/userActions";
 import { Container, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
@@ -16,6 +16,9 @@ const UserListScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers());
@@ -23,10 +26,13 @@ const UserListScreen = () => {
       navigate("/login");
       toast("You have been redirected");
     }
-  }, [dispatch, userInfo, navigate]);
+  }, [dispatch, userInfo, navigate, successDelete]);
 
   const deleteUserHandler = (id) => {
-    console.log("deleted");
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      dispatch(deleteUser(id));
+      toast("User has been deleted...");
+    }
   };
 
   return (
