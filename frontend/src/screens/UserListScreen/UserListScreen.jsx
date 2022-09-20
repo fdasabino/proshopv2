@@ -13,9 +13,17 @@ const UserListScreen = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch]);
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listUsers());
+    } else {
+      navigate("/login");
+      toast("You have been redirected");
+    }
+  }, [dispatch, userInfo, navigate]);
 
   const deleteUserHandler = (id) => {
     console.log("deleted");

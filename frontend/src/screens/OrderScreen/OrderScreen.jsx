@@ -171,12 +171,16 @@ const PlaceOrderScreen = () => {
             {order.paymentMethod}
           </ListGroup.Item>
           <ListGroup.Item>
-            {order.isPaid && <Alert variant="success">Order paid on: {order.paidAt}</Alert>}
+            {order.isPaid && (
+              <Alert variant="success">Order paid on: {order.paidAt.substring(0, 10)}</Alert>
+            )}
             {!order.isPaid && <Alert variant="danger">Order not paid</Alert>}
           </ListGroup.Item>
           <ListGroup.Item>
             {order.isDelivered && (
-              <Alert variant="success">Order delivered on: {order.deliveredAt}</Alert>
+              <Alert variant="success">
+                Order delivered on: {order.deliveredAt.substring(0, 10)}
+              </Alert>
             )}
             {!order.isDelivered && <Alert variant="danger">Order not delivered</Alert>}
           </ListGroup.Item>

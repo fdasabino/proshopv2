@@ -6,6 +6,7 @@ import { getUserDetails, updateUserProfile } from "../../redux-store/actions/use
 import { listMyOrders } from "../../redux-store/actions/orderActions";
 import { Container, Form, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
+import { FaArrowRight } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const ProfileScreen = () => {
@@ -69,10 +70,11 @@ const ProfileScreen = () => {
             <ListGroup key={order._id} className="my-4">
               <Accordion>
                 <Accordion.Item eventKey="0">
-                  <Accordion.Header>{order._id.toUpperCase()}</Accordion.Header>
+                  <Accordion.Header>
+                    ORDER DATE:
+                    <strong className="mx-3">{order.createdAt.substring(0, 10)}</strong>
+                  </Accordion.Header>
                   <Accordion.Body>
-                    <p>DATE: {order.createdAt}</p>
-                    <hr />
                     <p>ORDER AMOUNT: ${order.totalPrice}</p>
                     <hr />
                     <p>PAID: {order.isPaid ? "YES" : "NO"}</p>
