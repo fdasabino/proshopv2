@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails } from "../../redux-store/actions/userActions";
+import { getUserDetails, updateUser } from "../../redux-store/actions/userActions";
+import { USER_CONSTANT_TYPES } from "../../redux-store/constants/userConstants";
 import { Container, Form, Button, Row, Col, Alert } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
@@ -17,17 +18,26 @@ const UserEditScreen = () => {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate;
+
   useEffect(() => {
-    if (!user.name || user._id !== id) {
-      dispatch(getUserDetails(id));
+    if (successUpdate) {
+      dispatch({ type: USER_CONSTANT_TYPES.USER_UPDATE_RESET });
+      navigate("/admin/userlist");
     } else {
-      setName(user.name);
-      setIsAdmin(user.isAdmin);
+      if (!user.name || user._id !== id) {
+        dispatch(getUserDetails(id));
+      } else {
+        setName(user.name);
+        setIsAdmin(user.isAdmin);
+      }
     }
-  }, [dispatch, id, user._id, user.name, user.isAdmin]);
+  }, [dispatch, id, user._id, user.name, user.isAdmin, navigate, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(updateUser({ _id: user._id, name, isAdmin }));
     navigate("/admin/userlist");
     toast.success("User details updated");
   };
@@ -39,6 +49,8 @@ const UserEditScreen = () => {
       </Link>
       <Row>
         <h3 className="text-center py-3">Edit user details</h3>
+        {loadingUpdate && <Spinner />}
+        {errorUpdate && <Alert variant="danger">{errorUpdate}</Alert>}
         <hr />
         <Col>
           {error && <Alert variant="danger">{error}</Alert>}

@@ -140,24 +140,24 @@ const getUserById = AsyncHandler(async (req, res) => {
   }
 });
 
-//@desc  Update user - admin
-// @route PUT /api/users/:id
-// @access Private/admin
+// @desc    Update user
+// @route   PUT /api/users/:id
+// @access  Private/Admin
 const updateUser = AsyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (user) {
-    (user.name = req.body.name || user.name),
-      (user.email = req.body.email || user.email),
-      (user.isAdmin = req.body.password);
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
 
-    const updatedUSer = await user.save();
+    const updatedUser = await user.save();
 
     res.json({
-      _id: updatedUSer._id,
-      name: updatedUSer.name,
-      email: updatedUSer.email,
-      isAdmin: updatedUSer.isAdmin,
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
     });
   } else {
     res.status(404);

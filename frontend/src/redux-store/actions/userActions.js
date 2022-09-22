@@ -198,3 +198,38 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_CONSTANT_TYPES.USER_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+
+    dispatch({ type: USER_CONSTANT_TYPES.USER_UPDATE_SUCCESS, payload: data });
+    dispatch({ type: USER_CONSTANT_TYPES.USER_DETAILS_SUCCESS });
+    dispatch({ type: USER_CONSTANT_TYPES.USER_DETAILS_RESET });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message ? error.response.data.message : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_CONSTANT_TYPES.USER_UPDATE_FAIL,
+      payload: message,
+    });
+  }
+};
