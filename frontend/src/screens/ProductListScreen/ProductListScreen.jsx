@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../../redux-store/actions/productActions";
+import { listProducts, deleteProduct } from "../../redux-store/actions/productActions";
 import { Container, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
@@ -14,6 +14,9 @@ const ProductListScreen = () => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -24,11 +27,12 @@ const ProductListScreen = () => {
       navigate("/login");
       toast("You have been redirected");
     }
-  }, [dispatch, userInfo, navigate]);
+  }, [dispatch, userInfo, navigate, successDelete]);
 
   const deleteProductHandler = (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       // delete the product
+      dispatch(deleteProduct(id));
       toast("Product deleted...");
     }
   };
@@ -47,12 +51,16 @@ const ProductListScreen = () => {
             <FaPlus className="mx-2" /> Add Product
           </Button>
           {loading && <Spinner />}
+          {loadingDelete && <Spinner />}
           {error && <Alert variant="danger">{error}</Alert>}
+          {errorDelete && <Alert variant="danger">{errorDelete}</Alert>}
           {products?.map((product) => (
             <ListGroup key={product._id} className="my-4">
               <Accordion>
                 <Accordion.Item eventKey="0">
-                  <Accordion.Header>{product.name.toUpperCase()}</Accordion.Header>
+                  <Accordion.Header>
+                    <strong>{product.name.toUpperCase()}</strong>
+                  </Accordion.Header>
                   <Accordion.Body>
                     <p>ID: {product._id}</p>
                     <hr />
