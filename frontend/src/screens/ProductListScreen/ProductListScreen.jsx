@@ -5,7 +5,7 @@ import { listProducts, deleteProduct } from "../../redux-store/actions/productAc
 import { Container, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
-import { FaTrashAlt, FaPlus } from "react-icons/fa";
+import { FaTrashAlt, FaPlus, FaStar, FaTags } from "react-icons/fa";
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -62,19 +62,35 @@ const ProductListScreen = () => {
                     <strong>{product.name.toUpperCase()}</strong>
                   </Accordion.Header>
                   <Accordion.Body>
-                    <p>ID: {product._id}</p>
+                    <p>
+                      <FaTags className="mx-2" /> ID: {product._id}
+                    </p>
                     <hr />
-                    <p>Name: {product.name}</p>
+                    <p>
+                      <FaTags className="mx-2" /> Name: {product.name}
+                    </p>
                     <hr />
-                    <p>Brand: {product.brand.toUpperCase()}</p>
+                    <p>
+                      <FaTags className="mx-2" /> Brand: {product.brand.toUpperCase()}
+                    </p>
                     <hr />
-                    <p>Category: {product.category.toUpperCase()}</p>
+                    <p>
+                      <FaTags className="mx-2" /> Category: {product.category.toUpperCase()}
+                    </p>
                     <hr />
-                    <p>Price: ${product.price}</p>
+                    <p>
+                      <FaTags className="mx-2" /> Price: ${product.price}
+                    </p>
                     <hr />
-                    <p>In Stock: {product.countInStock ? product.countInStock : "NO"}</p>
+                    <p>
+                      <FaTags className="mx-2" /> In Stock:{" "}
+                      {product.countInStock ? product.countInStock : "NO"}
+                    </p>
                     <hr />
-                    <p>Rating: {product.rating ? product.rating : "NO"} stars</p>
+                    <p className="d-flex align-items-center">
+                      <FaTags className="mx-2" /> Rating: {product.rating ? product.rating : "NO"}{" "}
+                      <FaStar color="gold" />
+                    </p>
                     <hr />
 
                     <div>
