@@ -45,9 +45,9 @@ main {
 
 .form-control {
   text-align: center !important;
-  width: fit-content !important;
+  min-width: fit-content !important;
   border: none !important;
-  border-bottom: 1px solid #000 !important;
+  border: 1px solid #000 !important;
   background: #fff !important;
 }
 
