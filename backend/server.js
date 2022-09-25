@@ -5,12 +5,19 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
-import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+import morgan from "morgan";
 import path from "path";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+
 dotenv.config();
 connectDB();
 
 const app = express();
+
+if (process.env.NODE_ENVIRONMENT === "development") {
+  app.use(morgan("dev"));
+}
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
