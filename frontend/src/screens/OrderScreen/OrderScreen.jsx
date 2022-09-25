@@ -4,12 +4,13 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { getOrderDetails, payOrder, deliverOrder } from "../../redux-store/actions/orderActions";
 import { Row, Col, ListGroup, Image, Card, Alert, Accordion, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
 import { ORDER_CONSTANT_TYPES } from "../../redux-store/constants/orderConstants";
 import { CART_CONSTANT_TYPES } from "../../redux-store/constants/cartConstants";
 
 const PlaceOrderScreen = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const orderId = id;
 
@@ -30,6 +31,9 @@ const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get("/api/config/paypal");
       const script = document.createElement("script");
@@ -55,7 +59,7 @@ const PlaceOrderScreen = () => {
         dispatch({ type: CART_CONSTANT_TYPES.CART_ITEMS_RESET });
       }
     }
-  }, [dispatch, order, orderId, successPay, successDeliver]);
+  }, [dispatch, order, orderId, successPay, successDeliver, navigate, userInfo]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
@@ -188,7 +192,8 @@ const PlaceOrderScreen = () => {
             {!order.isPaid && <Alert variant="danger">Order not paid</Alert>}
           </ListGroup.Item>
           <ListGroup.Item>
-            {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+            {loadingDeliver && <Spinner />}
+            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
               <Button
                 type="button"
                 className="btn btn-block btn-secondary btn-sm mb-2"
