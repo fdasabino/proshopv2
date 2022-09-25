@@ -49,8 +49,7 @@ const Rating = ({ value, text }) => {
           <FaRegStar color="gold" />
         )}
       </span>
-      <br />
-      <span className="mx-2">{text && text} reviews</span>
+      <span className="mx-2">({text && text})</span>
     </div>
   );
 };

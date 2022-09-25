@@ -27,7 +27,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-textarea.form-control {
+textarea {
   resize: none !important;
 }
 
