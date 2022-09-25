@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listProductDetails } from "../../redux-store/actions/productActions";
+import { listProductDetails, updateProduct } from "../../redux-store/actions/productActions";
 import { PRODUCT_CONSTANT_TYPES } from "../../redux-store/constants/productConstants";
 import { Container, Form, Button, Row, Col, Alert } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
@@ -23,24 +23,34 @@ const ProductEditScreen = () => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate;
+
   useEffect(() => {
-    if (!product.name || product._id !== id) {
-      dispatch(listProductDetails(id));
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_CONSTANT_TYPES.PRODUCT_UPDATE_RESET });
+      navigate("/admin/productlist");
+      toast.success(`Product "${product.name}" was updated successfully`);
     } else {
-      setName(product.name);
-      setPrice(product.price);
-      setImage(product.image);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
-      setDescription(product.description);
+      if (!product.name || product._id !== id) {
+        dispatch(listProductDetails(id));
+      } else {
+        setName(product.name);
+        setPrice(product.price);
+        setImage(product.image);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setCountInStock(product.countInStock);
+        setDescription(product.description);
+      }
     }
-  }, [dispatch, id, product, navigate]);
+  }, [dispatch, id, product, navigate, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    navigate("/admin/productlist");
-    toast.success(`Product "${product.name}" was updated successfully`);
+    dispatch(
+      updateProduct({ _id: id, name, price, brand, category, image, description, countInStock })
+    );
   };
 
   return (
@@ -50,8 +60,8 @@ const ProductEditScreen = () => {
       </Link>
       <Row>
         <h3 className="text-center py-3">Edit user details</h3>
-        {/* {loadingUpdate && <Spinner />} */}
-        {/* {errorUpdate && <Alert variant="danger">{errorUpdate}</Alert>} */}
+        {loadingUpdate && <Spinner />}
+        {errorUpdate && <Alert variant="danger">{errorUpdate}</Alert>}
         <hr />
         <Col>
           {error && <Alert variant="danger">{error}</Alert>}
