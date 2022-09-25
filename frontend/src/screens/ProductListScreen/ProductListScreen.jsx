@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts, deleteProduct } from "../../redux-store/actions/productActions";
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from "../../redux-store/actions/productActions";
+import { PRODUCT_CONSTANT_TYPES } from "../../redux-store/constants/productConstants";
 import { Container, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
@@ -17,17 +22,29 @@ const ProductListScreen = () => {
   const productDelete = useSelector((state) => state.productDelete);
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CONSTANT_TYPES.PRODUCT_CREATE_RESET });
+    if (!userInfo.isAdmin) {
       navigate("/login");
-      toast("You have been redirected");
+      toast("You are not logged as an admin");
     }
-  }, [dispatch, userInfo, navigate, successDelete]);
+    if (successCreate) {
+      navigate(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [dispatch, userInfo, navigate, successDelete, successCreate, createdProduct]);
 
   const deleteProductHandler = (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
@@ -37,8 +54,8 @@ const ProductListScreen = () => {
     }
   };
 
-  const createProductHandler = (product) => {
-    console.log("Click");
+  const createProductHandler = () => {
+    dispatch(createProduct());
   };
 
   return (
@@ -52,8 +69,10 @@ const ProductListScreen = () => {
           </Button>
           {loading && <Spinner />}
           {loadingDelete && <Spinner />}
+          {loadingCreate && <Spinner />}
           {error && <Alert variant="danger">{error}</Alert>}
           {errorDelete && <Alert variant="danger">{errorDelete}</Alert>}
+          {errorCreate && <Alert variant="danger">{errorDelete}</Alert>}
           {products?.map((product) => (
             <ListGroup key={product._id} className="my-4">
               <Accordion>
