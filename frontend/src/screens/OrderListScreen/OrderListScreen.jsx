@@ -5,6 +5,8 @@ import { listOrders } from "../../redux-store/actions/orderActions";
 import { Container, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import toast from "react-hot-toast";
+import { FaMoneyBillWave, FaTruckMoving } from "react-icons/fa";
+
 const OrderListScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,6 +51,20 @@ const OrderListScreen = () => {
                           <strong className="mx-2">TOTAL:</strong> ${order.totalPrice}
                         </span>
                       </small>
+                      {order.isPaid && (
+                        <small>
+                          <span className="mx-2">
+                            <FaMoneyBillWave color="green" /> Paid
+                          </span>
+                        </small>
+                      )}
+                      {order.isDelivered && (
+                        <small>
+                          <span className="mx-2">
+                            <FaTruckMoving color="green" /> Delivered
+                          </span>
+                        </small>
+                      )}
                     </div>
                   </Accordion.Header>
                   <Accordion.Body>
@@ -62,10 +78,26 @@ const OrderListScreen = () => {
                     <hr />
                     <p>Total: ${order.totalPrice}</p>
                     <hr />
-                    <p>Paid: {order.isPaid ? order.paidAt.substring(0, 10) : "NO"}</p>
+                    <p>
+                      Paid:{" "}
+                      {order.isPaid ? (
+                        <span className="text-success mx-2 fw-bold">
+                          {order.paidAt.substring(0, 10)}
+                        </span>
+                      ) : (
+                        "NO"
+                      )}
+                    </p>
                     <hr />
                     <p>
-                      Delivered: {order.isDelivered ? order.deliveredAt.substring(0, 10) : "NO"}
+                      Delivered:
+                      {order.isDelivered ? (
+                        <span className="text-success mx-2 fw-bold">
+                          {order.deliveredAt.substring(0, 10)}
+                        </span>
+                      ) : (
+                        "NO"
+                      )}
                     </p>
                     <hr />
                     <div className="d-flex justify-content-between flex-wrap gap-3">
