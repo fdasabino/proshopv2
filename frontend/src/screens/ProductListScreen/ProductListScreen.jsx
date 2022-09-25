@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   listProducts,
@@ -9,15 +9,17 @@ import {
 import { PRODUCT_CONSTANT_TYPES } from "../../redux-store/constants/productConstants";
 import { Container, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
+import Paginate from "../../components/Paginate/Paginate";
 import toast from "react-hot-toast";
 import { FaTrashAlt, FaPlus, FaStar, FaTags } from "react-icons/fa";
 
 const ProductListScreen = () => {
+  const { pageNumber } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   const productDelete = useSelector((state) => state.productDelete);
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
@@ -42,9 +44,9 @@ const ProductListScreen = () => {
     if (successCreate) {
       navigate(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts("", pageNumber));
     }
-  }, [dispatch, userInfo, navigate, successDelete, successCreate, createdProduct]);
+  }, [dispatch, userInfo, navigate, successDelete, successCreate, createdProduct, pageNumber]);
 
   const deleteProductHandler = (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
@@ -139,6 +141,7 @@ const ProductListScreen = () => {
               </Accordion>
             </ListGroup>
           ))}
+          <Paginate pages={pages} page={page} isAdmin={true} />
         </Col>
       </Row>
     </Container>

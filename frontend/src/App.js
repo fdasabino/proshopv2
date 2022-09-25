@@ -74,7 +74,8 @@ function App() {
             <Route path="/admin/userlist" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
             <Route path="/admin/productlist" element={<ProductListScreen />} />
-            <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
+            <Route path="/admin/productlist/:pageNumber" element={<ProductListScreen />} exact />
+            <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} exact />
           </Routes>
         </Container>
       </main>
