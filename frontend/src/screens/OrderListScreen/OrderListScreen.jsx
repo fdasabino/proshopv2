@@ -37,14 +37,19 @@ const OrderListScreen = () => {
               <Accordion>
                 <Accordion.Item eventKey="0">
                   <Accordion.Header>
-                    <strong>CUSTOMER:</strong>
-                    <span className="mx-2">{order.user.name.toUpperCase()}</span>
-                    <span className="mx-2">
-                      <strong>ID:</strong> {order._id}
-                    </span>
-                    <span className="mx-2">
-                      <strong>TOTAL:</strong> ${order.totalPrice}
-                    </span>
+                    <div className="d-flex flex-wrap align-items-center gap-3">
+                      <small>
+                        <span className="mx-2">
+                          <strong className="mx-2">NAME:</strong>
+                          {order.user.name.toUpperCase()}
+                        </span>
+                      </small>
+                      <small>
+                        <span className="mx-2">
+                          <strong className="mx-2">TOTAL:</strong> ${order.totalPrice}
+                        </span>
+                      </small>
+                    </div>
                   </Accordion.Header>
                   <Accordion.Body>
                     <p>Name: {order?.user.name}</p>
@@ -67,7 +72,7 @@ const OrderListScreen = () => {
                       <Button
                         type="button"
                         className="btn block"
-                        onClick={() => navigate(`/admin/order/${order._id}`)}
+                        onClick={() => navigate(`/orders/${order._id}`)}
                       >
                         Details
                       </Button>
