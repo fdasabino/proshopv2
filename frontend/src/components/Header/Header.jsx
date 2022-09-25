@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaUser,
   FaShoppingCart,
@@ -25,6 +25,10 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const logoutHandler = () => {
     dispatch(logout());
     toast.success("You have been logged out...");
@@ -37,8 +41,10 @@ const Header = () => {
           <Navbar.Brand as={Link} to="/">
             <FaProjectDiagram /> PROSHOP
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} />
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} onMouseEnter={handleShow} />
           <Navbar.Offcanvas
+            show={show}
+            onHide={handleClose}
             id={`offcanvasNavbar-expand`}
             aria-labelledby={`offcanvasNavbarLabel-expand`}
             placement="end"
@@ -48,7 +54,7 @@ const Header = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="align-items-start justify-content-end  flex-grow-1">
-                <Nav.Link as={Link} to="/" className="text-uppercase gap-1">
+                <Nav.Link as={Link} to="/" className="text-uppercase gap-1" onClick={handleClose}>
                   <FaHome />
                   Home
                 </Nav.Link>
@@ -60,13 +66,19 @@ const Header = () => {
                       id={`offcanvasNavbarDropdown-expand`}
                       className="text-uppercase"
                     >
-                      <NavDropdown.Item as={Link} to="/profile" className="text-uppercase">
+                      <NavDropdown.Item
+                        as={Link}
+                        to="/profile"
+                        className="text-uppercase"
+                        onClick={handleClose}
+                      >
                         <FaUser /> Profile
                       </NavDropdown.Item>
 
                       {userInfo.isAdmin && (
                         <>
                           <NavDropdown.Item
+                            onClick={handleClose}
                             as={Link}
                             to="/admin/orderlist"
                             className="text-uppercase"
@@ -75,6 +87,7 @@ const Header = () => {
                           </NavDropdown.Item>
 
                           <NavDropdown.Item
+                            onClick={handleClose}
                             as={Link}
                             to="/admin/userlist"
                             className="text-uppercase"
@@ -83,6 +96,7 @@ const Header = () => {
                           </NavDropdown.Item>
 
                           <NavDropdown.Item
+                            onClick={handleClose}
                             as={Link}
                             to="/admin/productlist"
                             className="text-uppercase"
@@ -93,7 +107,13 @@ const Header = () => {
                       )}
 
                       <NavDropdown.Divider />
-                      <NavDropdown.Item onClick={logoutHandler} className="text-uppercase">
+                      <NavDropdown.Item
+                        onClick={() => {
+                          logoutHandler();
+                          handleClose();
+                        }}
+                        className="text-uppercase"
+                      >
                         <FaSignOutAlt />
                         Sign out
                       </NavDropdown.Item>
@@ -107,17 +127,32 @@ const Header = () => {
                       title="Login"
                       id={`offcanvasNavbarDropdown-expand`}
                     >
-                      <NavDropdown.Item as={Link} to="/login" className="text-uppercase">
+                      <NavDropdown.Item
+                        as={Link}
+                        to="/login"
+                        className="text-uppercase"
+                        onClick={handleClose}
+                      >
                         <FaUser /> Sign in
                       </NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to="/register" className="text-uppercase">
+                      <NavDropdown.Item
+                        as={Link}
+                        to="/register"
+                        className="text-uppercase"
+                        onClick={handleClose}
+                      >
                         <FaUserPlus /> Sign up
                       </NavDropdown.Item>
                     </NavDropdown>
                   </div>
                 )}
 
-                <Nav.Link as={Link} to="/cart" className="text-uppercase gap-1">
+                <Nav.Link
+                  as={Link}
+                  to="/cart"
+                  className="text-uppercase gap-1"
+                  onClick={handleClose}
+                >
                   <FaShoppingCart /> Cart
                   <Badge bg="warning" className="p-2 rounded-circle">
                     {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
