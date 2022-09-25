@@ -88,3 +88,16 @@ export const productReviewCreateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const productTopReviewsReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_CONSTANT_TYPES.PRODUCT_TOP_REVIEWED_REQUEST:
+      return { loading: true, products: [] };
+    case PRODUCT_CONSTANT_TYPES.PRODUCT_TOP_REVIEWED_SUCCESS:
+      return { loading: false, products: action.payload };
+    case PRODUCT_CONSTANT_TYPES.PRODUCT_TOP_REVIEWED_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

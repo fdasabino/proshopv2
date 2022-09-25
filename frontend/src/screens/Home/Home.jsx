@@ -4,6 +4,7 @@ import { Row, Col, Alert } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import Product from "../../components/Product/Product";
 import Paginate from "../../components/Paginate/Paginate";
+import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
 
 import { useSelector, useDispatch } from "react-redux";
 import { listProducts } from "../../redux-store/actions/productActions";
@@ -22,6 +23,7 @@ const Home = () => {
 
   return (
     <div className="d-flex align-items-center flex-column gap-5">
+      {!keyword && <ProductCarousel />}
       <h3>Latest Products</h3>
       {loading ? (
         <Spinner />
