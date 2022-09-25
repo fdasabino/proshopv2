@@ -12,6 +12,7 @@ import {
   FaListUl,
 } from "react-icons/fa";
 import { logout } from "../../redux-store/actions/userActions";
+import SearchBox from "../SearchBox/SearchBox";
 import { Navbar, Container, Offcanvas, Nav, NavDropdown, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -52,15 +53,16 @@ const Header = () => {
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>MENU</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body>
-              <Nav className="align-items-start justify-content-end  flex-grow-1">
+            <Offcanvas.Body className="align-items-start justify-content-center">
+              <Nav className="align-items-start">
                 <Nav.Link as={Link} to="/" className="text-uppercase gap-1" onClick={handleClose}>
                   <FaHome />
                   Home
                 </Nav.Link>
 
                 {userInfo ? (
-                  <div className="d-flex align-items-center justify-content-center">
+                  <div className="d-flex align-items-center justify-content-center gap-1">
+                    <FaUser />
                     <NavDropdown
                       title={userInfo && userInfo.name.split(" ")[0]}
                       id={`offcanvasNavbarDropdown-expand`}
@@ -159,6 +161,7 @@ const Header = () => {
                   </Badge>
                 </Nav.Link>
               </Nav>
+              <SearchBox handleClose={handleClose} />
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

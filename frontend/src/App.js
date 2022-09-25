@@ -54,6 +54,7 @@ function App() {
       <main>
         <Container>
           <Routes>
+            <Route path="/search/:keyword" element={<Home />} />
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductScreen />} />
             <Route path="/cart">

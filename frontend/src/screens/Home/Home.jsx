@@ -6,16 +6,18 @@ import Product from "../../components/Product/Product";
 
 import { useSelector, useDispatch } from "react-redux";
 import { listProducts } from "../../redux-store/actions/productActions";
+import { useParams } from "react-router-dom";
 
 const Home = () => {
+  const { keyword } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
 
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <div className="d-flex align-items-center flex-column gap-5">
