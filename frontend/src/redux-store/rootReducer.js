@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 //reducers
 import {
-  productReducer,
+  productListReducer,
   productDetailsReducer,
   productDeleteReducer,
   productCreateReducer,
@@ -30,7 +30,7 @@ import {
 
 //reducers being combined into one function
 export const rootReducer = combineReducers({
-  productList: productReducer,
+  productList: productListReducer,
   productDetails: productDetailsReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,

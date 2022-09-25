@@ -54,8 +54,10 @@ function App() {
       <main>
         <Container>
           <Routes>
-            <Route path="/search/:keyword" element={<Home />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/search/:keyword" element={<Home />} exact />
+            <Route path="/page/:pageNumber" element={<Home />} exact />
+            <Route path="/search/:keyword/page/:pageNumber" element={<Home />} exact />
+            <Route path="/" element={<Home />} exact />
             <Route path="/product/:id" element={<ProductScreen />} />
             <Route path="/cart">
               <Route path=":id" element={<CartScreen />} />
