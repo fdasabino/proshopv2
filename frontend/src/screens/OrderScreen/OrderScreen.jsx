@@ -142,25 +142,25 @@ const PlaceOrderScreen = () => {
             <ListGroup.Item>
               <Row className="d-flex align-items-center justify-content-evenly text-center">
                 <Col>Items:</Col>
-                <Col>${order.itemsPrice}</Col>
+                <Col>${order.itemsPrice.toFixed(2)}</Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row className="d-flex align-items-center justify-content-evenly text-center">
                 <Col>Shipping:</Col>
-                <Col>${order.shippingPrice}</Col>
+                <Col>${order.shippingPrice.toFixed(2)}</Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row className="d-flex align-items-center justify-content-evenly text-center">
                 <Col>Tax:</Col>
-                <Col>${order.taxPrice}</Col>
+                <Col>${order.taxPrice.toFixed(2)}</Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row className="d-flex align-items-start justify-content-evenly text-center">
                 <Col>Total:</Col>
-                <Col>${order.totalPrice}</Col>
+                <Col>${order.totalPrice.toFixed(2)}</Col>
               </Row>
             </ListGroup.Item>
           </Card>

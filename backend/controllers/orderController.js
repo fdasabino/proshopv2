@@ -86,7 +86,7 @@ const getMyOrders = AsyncHandler(async (req, res) => {
 // @route   GET /api/orders
 // @access  Private/admin
 const getOrders = AsyncHandler(async (req, res) => {
-  const orders = await Order.find().populate("user", "id, name");
+  const orders = await Order.find().populate("user", "id name email");
   res.json(orders);
 });
 

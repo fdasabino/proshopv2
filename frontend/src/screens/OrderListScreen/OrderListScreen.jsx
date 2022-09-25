@@ -1,0 +1,85 @@
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { listOrders } from "../../redux-store/actions/orderActions";
+import { Container, Button, Row, Col, Alert, Accordion, ListGroup } from "react-bootstrap";
+import Spinner from "../../components/Spinner/Spinner";
+import toast from "react-hot-toast";
+const OrderListScreen = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const orderList = useSelector((state) => state.orderList);
+  const { loading, error, orders } = orderList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listOrders());
+    } else {
+      navigate("/login");
+      toast("You have been redirected");
+    }
+  }, [dispatch, userInfo, navigate]);
+
+  return (
+    <Container className="d-flex flex-column gap-3">
+      <h3 className="text-center">Manage orders</h3>
+      <hr />
+      <Row className="d-flex align-items-between">
+        <Col>
+          {loading && <Spinner />}
+          {error && <Alert variant="danger">{error}</Alert>}
+          {orders?.map((order) => (
+            <ListGroup key={order._id} className="my-4">
+              <Accordion>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    <strong>CUSTOMER:</strong>
+                    <span className="mx-2">{order.user.name.toUpperCase()}</span>
+                    <span className="mx-2">
+                      <strong>ID:</strong> {order._id}
+                    </span>
+                    <span className="mx-2">
+                      <strong>TOTAL:</strong> ${order.totalPrice}
+                    </span>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <p>Name: {order?.user.name}</p>
+                    <hr />
+                    <p>
+                      Email: <a href={`mailto:${order?.user.email}`}>{order?.user.email}</a>
+                    </p>
+                    <hr />
+                    <p>Date: {order.createdAt.substring(0, 10)}</p>
+                    <hr />
+                    <p>Total: ${order.totalPrice}</p>
+                    <hr />
+                    <p>Paid: {order.isPaid ? order.paidAt.substring(0, 10) : "NO"}</p>
+                    <hr />
+                    <p>
+                      Delivered: {order.isDelivered ? order.deliveredAt.substring(0, 10) : "NO"}
+                    </p>
+                    <hr />
+                    <div className="d-flex justify-content-between flex-wrap gap-3">
+                      <Button
+                        type="button"
+                        className="btn block"
+                        onClick={() => navigate(`/admin/order/${order._id}`)}
+                      >
+                        Details
+                      </Button>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </ListGroup>
+          ))}
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+export default OrderListScreen;
