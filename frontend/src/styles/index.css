@@ -3,6 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+nav {
+  border-top: 5px solid teal;
+}
 
 main {
   min-height: 100vh;
@@ -32,95 +35,13 @@ textarea {
 }
 
 /* bootstrap overrides*/
-.navbar-toggler {
-  border: none !important;
-  font-size: 1.5rem !important;
-  transition: all 0.3s ease-in-out !important;
-}
-
-.navbar-toggler:hover {
-  transform: scale(1.02) !important;
-}
-
-.navbar-toggler:focus {
-  box-shadow: none !important;
-}
-
-.nav-link {
-  transition: all 0.3s ease-in-out !important;
-  font-weight: 600;
-  margin-right: 1rem !important;
-  color: #000 !important;
-  display: flex !important;
-  align-items: center !important;
-  text-transform: uppercase !important;
-}
-.nav-link:hover {
-  transform: scale(1.02);
-}
-
-.form-control {
-  text-align: center !important;
-  min-width: fit-content !important;
-  border: none !important;
-  border: 1px solid #000 !important;
-  border-radius: 0 !important;
-  background: #fff !important;
-}
-
-form-control::placeholder {
-  text-align: center !important;
-}
-/* or, for legacy browsers */
-
-form-control::-webkit-input-placeholder {
-  text-align: center !important;
-}
-
-form-control:-moz-placeholder {
-  /* Firefox 18- */
-  text-align: center !important;
-}
-
-form-control::-moz-placeholder {
-  /* Firefox 19+ */
-  text-align: center !important;
-}
-
-form-control:-ms-input-placeholder {
-  text-align: center !important;
-}
-
 .btn {
-  border-radius: 0 !important;
+  border: none !important;
+}
+.btn-light:hover {
+  background: transparent !important;
 }
 
-.btn-primary:hover {
-  border: 1px solid #000 !important;
-  background: #fff !important;
-  color: #000 !important;
-}
-.btn-success:hover {
-  border: 1px solid #4bbf73 !important;
-  background: #fff !important;
-  color: #000 !important;
-}
-.btn-info:hover {
-  border: 1px solid #1f9bcf !important;
-  background: #fff !important;
-  color: #000 !important;
-}
-.btn-warning:hover {
-  border: 1px solid #f0ad4e !important;
-  background: #fff !important;
-  color: #000 !important;
-}
-.btn-danger:hover {
-  border: 1px solid #d9534f !important;
-  background: #fff !important;
-  color: #000 !important;
-}
-
-.small {
-  font-size: 12px !important;
+.btn:focus {
+  box-shadow: none !important;
 }

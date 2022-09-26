@@ -1,22 +1,14 @@
 import React, { useState } from "react";
-import {
-  FaUser,
-  FaShoppingCart,
-  FaHome,
-  FaProjectDiagram,
-  FaUserPlus,
-  FaSignOutAlt,
-  FaSignInAlt,
-  FaUsersCog,
-  FaDatabase,
-  FaListUl,
-} from "react-icons/fa";
+import { FaProjectDiagram, FaShoppingCart } from "react-icons/fa";
 import { logout } from "../../redux-store/actions/userActions";
+
 import SearchBox from "../SearchBox/SearchBox";
-import { Navbar, Container, Offcanvas, Nav, NavDropdown, Badge } from "react-bootstrap";
+import { Twirl as Hamburger } from "hamburger-react";
+import { Navbar, Offcanvas, Nav, NavDropdown, Button, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import "./Header.css";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -27,6 +19,7 @@ const Header = () => {
   const { userInfo } = userLogin;
 
   const [show, setShow] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -37,134 +30,88 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar expand="lg" bg="light" className="mb-3 p-4 fixed-top">
-        <Container fluid>
+      <Navbar expand="lg" className="d-flex justify-content-center p-2 bg-light fixed-top">
+        <div className="left">
           <Navbar.Brand as={Link} to="/">
-            <FaProjectDiagram /> PROSHOP
+            <FaProjectDiagram color="teal" /> PROSHOP
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} onMouseEnter={handleShow} />
-          <Navbar.Offcanvas
-            show={show}
-            onHide={handleClose}
-            id={`offcanvasNavbar-expand`}
-            aria-labelledby={`offcanvasNavbarLabel-expand`}
-            placement="end"
-          >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>MENU</Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body className="align-items-start justify-content-center">
-              <Nav className="align-items-start">
-                <Nav.Link as={Link} to="/" className="text-uppercase gap-1" onClick={handleClose}>
-                  <FaHome />
-                  Home
-                </Nav.Link>
+        </div>
 
-                {userInfo ? (
-                  <div className="d-flex align-items-center justify-content-center gap-1">
-                    <FaUser />
-                    <NavDropdown
-                      title={userInfo && userInfo.name.split(" ")[0]}
-                      id={`offcanvasNavbarDropdown-expand`}
+        <div className="right">
+          <Button variant="light" onClick={handleShow}>
+            <Hamburger toggled={show} toggle={handleShow} color="teal" />
+          </Button>
+        </div>
+
+        <Offcanvas show={show} onHide={handleClose}>
+          <Offcanvas.Header closeButton>
+            <Nav.Link as={Link} to="/cart" onClick={handleClose}>
+              <FaShoppingCart className="mx-1" />
+              <Badge bg="warning" className="p-2 rounded-circle">
+                {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
+              </Badge>
+            </Nav.Link>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav>
+              <Nav.Link as={Link} to="/" onClick={handleClose}>
+                Home
+              </Nav.Link>
+
+              {userInfo ? (
+                <div>
+                  <NavDropdown
+                    title={userInfo && userInfo.name.split(" ")[0]}
+                    id={`offcanvasNavbarDropdown-expand`}
+                  >
+                    <NavDropdown.Item as={Link} to="/profile" onClick={handleClose}>
+                      Profile
+                    </NavDropdown.Item>
+
+                    {userInfo.isAdmin && (
+                      <>
+                        <NavDropdown.Item onClick={handleClose} as={Link} to="/admin/orderlist">
+                          Manage Orders
+                        </NavDropdown.Item>
+
+                        <NavDropdown.Item onClick={handleClose} as={Link} to="/admin/userlist">
+                          Manage users
+                        </NavDropdown.Item>
+
+                        <NavDropdown.Item onClick={handleClose} as={Link} to="/admin/productlist">
+                          Manage Products
+                        </NavDropdown.Item>
+                      </>
+                    )}
+
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item
+                      onClick={() => {
+                        logoutHandler();
+                        handleClose();
+                      }}
                       className="text-uppercase"
                     >
-                      <NavDropdown.Item
-                        as={Link}
-                        to="/profile"
-                        className="text-uppercase"
-                        onClick={handleClose}
-                      >
-                        <FaUser /> Profile
-                      </NavDropdown.Item>
-
-                      {userInfo.isAdmin && (
-                        <>
-                          <NavDropdown.Item
-                            onClick={handleClose}
-                            as={Link}
-                            to="/admin/orderlist"
-                            className="text-uppercase"
-                          >
-                            <FaListUl /> Manage Orders
-                          </NavDropdown.Item>
-
-                          <NavDropdown.Item
-                            onClick={handleClose}
-                            as={Link}
-                            to="/admin/userlist"
-                            className="text-uppercase"
-                          >
-                            <FaUsersCog /> Manage users
-                          </NavDropdown.Item>
-
-                          <NavDropdown.Item
-                            onClick={handleClose}
-                            as={Link}
-                            to="/admin/productlist"
-                            className="text-uppercase"
-                          >
-                            <FaDatabase /> Manage Products
-                          </NavDropdown.Item>
-                        </>
-                      )}
-
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item
-                        onClick={() => {
-                          logoutHandler();
-                          handleClose();
-                        }}
-                        className="text-uppercase"
-                      >
-                        <FaSignOutAlt />
-                        Sign out
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  </div>
-                ) : (
-                  <div className="d-flex align-items-center gap-1">
-                    <FaSignInAlt color="black" />
-                    <NavDropdown
-                      className="text-black"
-                      title="Login"
-                      id={`offcanvasNavbarDropdown-expand`}
-                    >
-                      <NavDropdown.Item
-                        as={Link}
-                        to="/login"
-                        className="text-uppercase"
-                        onClick={handleClose}
-                      >
-                        <FaUser /> Sign in
-                      </NavDropdown.Item>
-                      <NavDropdown.Item
-                        as={Link}
-                        to="/register"
-                        className="text-uppercase"
-                        onClick={handleClose}
-                      >
-                        <FaUserPlus /> Sign up
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  </div>
-                )}
-
-                <Nav.Link
-                  as={Link}
-                  to="/cart"
-                  className="text-uppercase gap-1"
-                  onClick={handleClose}
-                >
-                  <FaShoppingCart /> Cart
-                  <Badge bg="warning" className="p-2 rounded-circle">
-                    {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
-                  </Badge>
-                </Nav.Link>
-              </Nav>
-              <SearchBox handleClose={handleClose} />
-            </Offcanvas.Body>
-          </Navbar.Offcanvas>
-        </Container>
+                      Sign out
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </div>
+              ) : (
+                <div className="d-flex align-items-center gap-1">
+                  <NavDropdown title="Login" id={`offcanvasNavbarDropdown-expand`}>
+                    <NavDropdown.Item as={Link} to="/login" onClick={handleClose}>
+                      Sign in
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/register" onClick={handleClose}>
+                      Sign up
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </div>
+              )}
+            </Nav>
+          </Offcanvas.Body>
+          <SearchBox handleClose={handleClose} />
+        </Offcanvas>
       </Navbar>
     </header>
   );

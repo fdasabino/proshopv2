@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import Spinner from "../Spinner/Spinner";
 import { listTopProducts } from "../../redux-store/actions/productActions";

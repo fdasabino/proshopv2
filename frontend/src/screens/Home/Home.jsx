@@ -9,6 +9,7 @@ import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
 import { useSelector, useDispatch } from "react-redux";
 import { listProducts } from "../../redux-store/actions/productActions";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const { keyword, pageNumber } = useParams();
@@ -23,7 +24,13 @@ const Home = () => {
 
   return (
     <div className="d-flex align-items-center flex-column gap-5">
-      {!keyword && <ProductCarousel />}
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to="/" className="btn btn-light">
+          Go back
+        </Link>
+      )}
       <h3>Latest Products</h3>
       {loading ? (
         <Spinner />
