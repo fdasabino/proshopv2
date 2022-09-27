@@ -19,6 +19,9 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const productList = useSelector((state) => state.productList);
+  const { products } = productList;
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -31,7 +34,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar expand="lg" className="d-flex justify-content-between p-2 bg-light fixed-top px-3">
+      <Navbar expand="lg" className="d-flex justify-content-evenly p-2 bg-light px-3">
         <div className="left">
           <Navbar.Brand as={Link} to="/">
             <FaProjectDiagram color="teal" /> PROSHOP
@@ -109,6 +112,21 @@ const Header = () => {
                   </NavDropdown>
                 </div>
               )}
+
+              <div className="">
+                <NavDropdown title="Products" id={`offcanvasNavbarDropdown-expand`}>
+                  {products?.map((product) => (
+                    <NavDropdown.Item
+                      key={product._id}
+                      as={Link}
+                      to={`/product/${product._id}`}
+                      onClick={handleClose}
+                    >
+                      {product.name}
+                    </NavDropdown.Item>
+                  ))}
+                </NavDropdown>
+              </div>
             </Nav>
           </Offcanvas.Body>
           <SearchBox handleClose={handleClose} />

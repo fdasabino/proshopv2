@@ -39,7 +39,7 @@ const Home = () => {
       ) : (
         <>
           <Row>
-            {products.map((product) => (
+            {products?.map((product) => (
               <Col key={product._id}>
                 <Product product={product} />
               </Col>
