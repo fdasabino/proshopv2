@@ -12,6 +12,7 @@ import "./Header.css";
 
 const Header = () => {
   const dispatch = useDispatch();
+
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
@@ -30,7 +31,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar expand="lg" className="d-flex justify-content-center p-2 bg-light fixed-top">
+      <Navbar expand="lg" className="d-flex justify-content-between p-2 bg-light fixed-top px-3">
         <div className="left">
           <Navbar.Brand as={Link} to="/">
             <FaProjectDiagram color="teal" /> PROSHOP
@@ -43,7 +44,7 @@ const Header = () => {
           </Button>
         </div>
 
-        <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas show={show} onHide={handleClose} placement="end">
           <Offcanvas.Header closeButton>
             <Nav.Link as={Link} to="/cart" onClick={handleClose}>
               <FaShoppingCart className="mx-1" />
