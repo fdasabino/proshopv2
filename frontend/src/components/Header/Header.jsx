@@ -79,7 +79,7 @@ const Header = () => {
                         </NavDropdown.Item>
 
                         <NavDropdown.Item onClick={handleClose} as={Link} to="/admin/userlist">
-                          Manage users
+                          Manage Users
                         </NavDropdown.Item>
 
                         <NavDropdown.Item onClick={handleClose} as={Link} to="/admin/productlist">
