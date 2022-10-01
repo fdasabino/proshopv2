@@ -21,7 +21,7 @@ const composeEnhancer =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
   composeWithDevTools;
 
-const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares, thunk));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 export const persistor = persistStore(store);
